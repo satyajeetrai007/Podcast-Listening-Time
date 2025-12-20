@@ -1,0 +1,55 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    outs:
+    - path: data/raw
+      hash: md5
+      md5: 9ab84a64c44b5bfc2a344749bdee6a7a.dir
+      size: 70036578
+      nfiles: 1
+  data_preprocessing:
+    cmd: python src/data_preprocessing.py
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: 9ab84a64c44b5bfc2a344749bdee6a7a.dir
+      size: 70036578
+      nfiles: 1
+    outs:
+    - path: data/preprocessed
+      hash: md5
+      md5: 531df842f12c67663c2bfc5865efe2c5.dir
+      size: 71952197
+      nfiles: 1
+  feature_engineering:
+    cmd: python src/feature_engineering.py
+    deps:
+    - path: data/preprocessed
+      hash: md5
+      md5: 531df842f12c67663c2bfc5865efe2c5.dir
+      size: 71952197
+      nfiles: 1
+    outs:
+    - path: data/fe
+      hash: md5
+      md5: 696f1e6bd42d4c85063d664654a68029.dir
+      size: 78225387
+      nfiles: 1
+  model_building_and_evaluation:
+    cmd: python src/model_building_and_evaluation.py
+    deps:
+    - path: data/fe
+      hash: md5
+      md5: 696f1e6bd42d4c85063d664654a68029.dir
+      size: 78225387
+      nfiles: 1
+    outs:
+    - path: metrics/model_metrics_lr.json
+      hash: md5
+      md5: 43ea4484ee1a45a47e7b2f2c8770b73a
+      size: 132
+    - path: model/model.pkl
+      hash: md5
+      md5: a23dec341f28481b565e275b40b366f7
+      size: 1148
