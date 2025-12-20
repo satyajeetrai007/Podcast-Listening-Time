@@ -7,11 +7,13 @@ stages:
     cmd: python src/data_preprocessing.py
     deps:
     - data/raw
+    - src/data_ingestion.py
     outs:
     - data/preprocessed
   feature_engineering:
     cmd: python src/feature_engineering.py
     deps:
+    - src/data_preprocessing.py
     - data/preprocessed
     outs:
     - data/fe
@@ -19,6 +21,7 @@ stages:
     cmd: python src/model_building_and_evaluation.py
     deps:
     - data/fe
+    - src/feature_engineering.py
     outs:
     - model/model.pkl
     - metrics/model_metrics_lr.json

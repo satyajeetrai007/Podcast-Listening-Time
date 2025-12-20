@@ -1,6 +1,7 @@
 import os
 from sklearn.preprocessing import LabelEncoder
 import pandas as pd
+import joblib
 
 train = pd.read_csv("data/preprocessed/train_preprocessed.csv")
 X_train = train.drop(columns=['Listening_Time_minutes'], axis=1)
@@ -34,10 +35,14 @@ def engineer_features(X):
         'Podcast_Name', 'Episode_Title', 'Genre', 'Publication_Day',
         'Publication_Time', 'Episode_Sentiment', 'length_bucket', 'genre_sentiment'
     ]
-
+    encoders = {}
     for col in categorical_cols:
         le = LabelEncoder()
         X[col] = le.fit_transform(X[col].astype(str))
+        encoders[col] = le
+
+    # Save the encoders to use in Flask
+    joblib.dump(encoders, "model/encoders.pkl")
 
     return X.reset_index(drop=True)
 
