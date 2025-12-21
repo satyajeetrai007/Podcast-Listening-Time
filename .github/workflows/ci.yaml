@@ -6,6 +6,13 @@ on:
 jobs: 
   ci-flow:
     runs-on: ubuntu-latest
+    env: 
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+      MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
+
+
     steps:
     - name: checkout-repo
       uses: actions/checkout@v4
@@ -26,6 +33,6 @@ jobs:
       run: |
        dvc repro
 
-       
+
 
 
