@@ -1,29 +1,18 @@
-# Data Science & ML
+# Web Framework & UI
+flask
+streamlit
+
+# Machine Learning & Processing
 pandas
 numpy
 scikit-learn
-xgboost
-lightgbm
-matplotlib
-scipy
-
-# API & UI
-flask
-streamlit
-requests
-
-# Project Utilities
-python-dotenv
 joblib
-pickle5
-tqdm
 
-# Data Ingestion & Tracking
-kaggle
+# Data & Tracking
 dagshub
 mlflow
-dvc[s3]
+kaggle
 
-# Async AWS (The strict conflict makers)
+# Cloud & Storage (Strict dependencies)
 aiobotocore[boto3]
 s3fs
