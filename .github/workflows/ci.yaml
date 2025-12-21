@@ -43,7 +43,7 @@ jobs:
 
     - name: Run DVC Pipeline
       run: |
-        dvc repro -F
+        dvc repro -f
 
     - name: Push Data and Metadata
       run: |
