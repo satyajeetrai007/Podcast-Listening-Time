@@ -4,10 +4,10 @@ import requests
 import json
 
 @st.cache_data
-def get_categories():
+def get_categoriess():
     with open("model/categories.json", "r") as f:
         return json.load(f)
-cats = get_categories()
+cats = get_categoriess()
 
 st.title("🎧 Podcast Listening Time Predictor")
 
