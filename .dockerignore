@@ -1,0 +1,11 @@
+.git
+.dvc/cache
+.dvc/tmp
+venv/
+data/raw/
+data/preprocessed/
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+*.zip
+*.log

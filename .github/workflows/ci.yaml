@@ -7,7 +7,7 @@ on:
 jobs: 
   ci-flow:
     runs-on: ubuntu-latest
-    # Added permissions to allow the bot to push code back to the repo
+    # permissions to allow the bot to push code back to the repo (for dvc push command)
     permissions:
       contents: write
     env: 
@@ -59,3 +59,8 @@ jobs:
         git add dvc.lock
         # Only commit if there are changes
         git diff --quiet && git diff --staged --quiet || (git commit -m "Build: auto-update dvc.lock [skip ci]" && git push)
+
+    - name: Build Docker Image
+      run: |
+        # Build the optimized slim image
+        docker build -t podcast-app-slim:latest .

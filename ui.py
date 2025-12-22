@@ -1,17 +1,12 @@
 import streamlit as st
 import pandas as pd
 import requests
+import json
 
 @st.cache_data
 def get_categories():
-    df_raw = pd.read_csv("data/raw/train.csv")
-    return {
-        "genres": sorted(df_raw['Genre'].unique().tolist()),
-        "days": sorted(df_raw['Publication_Day'].unique().tolist()),
-        "podcasts": sorted(df_raw['Podcast_Name'].unique().tolist()),
-        "titles": sorted(df_raw['Episode_Title'].unique().tolist()) # Added titles
-    }
-
+    with open("model/categories.json", "r") as f:
+        return json.load(f)
 cats = get_categories()
 
 st.title("🎧 Podcast Listening Time Predictor")
@@ -47,7 +42,7 @@ if st.button("Predict"):
     }
     
     try:
-        response = requests.post("http://localhost:5000/predict", json=payload)
+        response = requests.post("http://127.0.0.1:5000/predict", json=payload)
         st.metric("Predicted Listening Time", f"{response.json()['listening_time_minutes']} mins")
     except Exception as e:
         st.error(f"Connection Error: {e}")

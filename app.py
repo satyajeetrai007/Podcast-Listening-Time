@@ -3,6 +3,8 @@ import pickle
 import joblib
 import pandas as pd
 import numpy as np
+import pickle
+import json
 
 app = Flask(__name__)
 
@@ -57,12 +59,12 @@ def predict():
         raw_data = request.get_json()
         processed_df = transform_input(raw_data)
         
-        # Match training feature order (Drop 'id' if it exists in the payload)
+        # (Drop 'id' if it exists in the payload)
         if 'id' in processed_df.columns:
             processed_df = processed_df.drop(columns=['id'])
             
         prediction = model.predict(processed_df)
-        return jsonify({'listening_time_minutes': float(prediction[0])})
+        return jsonify({'listening_time_minutes': round(float(prediction[0]),2)})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
