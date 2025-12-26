@@ -1,4 +1,4 @@
 [core]
     remote = myremote
 ['remote "myremote"']
-    url = s3://satyajit-kaggle
+    url = s3://satyajeet-s3-bucket
