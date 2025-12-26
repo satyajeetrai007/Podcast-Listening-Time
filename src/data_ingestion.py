@@ -52,7 +52,7 @@ def save_categories(raw_data_path, output_path) -> None:
 
 
 if __name__ == "__main__":
-
+    print("1")
     api = KaggleApi()
     api.authenticate()
 

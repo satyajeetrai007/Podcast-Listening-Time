@@ -102,3 +102,9 @@ jobs:
               -p 8501:8501 \
               -p 5000:5000 \
               ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_DEFAULT_REGION }}.amazonaws.com/satyajeet_ecr_registery:latest
+
+
+
+              
+
+              
