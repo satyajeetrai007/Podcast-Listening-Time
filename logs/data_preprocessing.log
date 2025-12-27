@@ -6,3 +6,7 @@
 2025-12-27 11:14:37,615 - INFO - Categorical Features: ['Podcast_Name', 'Episode_Title', 'Genre', 'Publication_Day', 'Publication_Time', 'Episode_Sentiment']
 2025-12-27 11:14:40,296 - INFO - Imputation values saved to model/imputation_values.pkl
 2025-12-27 11:14:50,521 - INFO - Train shape: (750000, 12)
+2025-12-27 11:38:44,340 - INFO - Numerical Features: ['id', 'Episode_Length_minutes', 'Host_Popularity_percentage', 'Guest_Popularity_percentage', 'Number_of_Ads']
+2025-12-27 11:38:44,342 - INFO - Categorical Features: ['Podcast_Name', 'Episode_Title', 'Genre', 'Publication_Day', 'Publication_Time', 'Episode_Sentiment']
+2025-12-27 11:38:46,548 - INFO - Imputation values saved to model/imputation_values.pkl
+2025-12-27 11:38:56,292 - INFO - Train shape: (750000, 12)
