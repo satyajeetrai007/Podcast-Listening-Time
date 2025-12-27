@@ -1,0 +1,12 @@
+2025-12-27 10:50:33,251 - INFO - HTTP Request: GET https://dagshub.com/api/v1/user "HTTP/1.1 200 OK"
+2025-12-27 10:50:33,262 - INFO - Accessing as satyajeetrai007
+2025-12-27 10:50:35,259 - INFO - HTTP Request: GET https://dagshub.com/api/v1/repos/satyajeetrai007/Podcast-Listening-Time "HTTP/1.1 200 OK"
+2025-12-27 10:50:37,033 - INFO - HTTP Request: GET https://dagshub.com/api/v1/user "HTTP/1.1 200 OK"
+2025-12-27 10:50:37,036 - INFO - Initialized MLflow to track repo "satyajeetrai007/Podcast-Listening-Time"
+2025-12-27 10:50:37,038 - INFO - Repository satyajeetrai007/Podcast-Listening-Time initialized!
+2025-12-27 10:50:44,654 - INFO - Fold 1 - RMSE: 13.3336
+2025-12-27 10:50:45,888 - INFO - Fold 2 - RMSE: 13.3833
+2025-12-27 10:50:47,072 - INFO - Fold 3 - RMSE: 13.3512
+2025-12-27 10:50:48,418 - INFO - Fold 4 - RMSE: 13.3712
+2025-12-27 10:50:49,647 - INFO - Fold 5 - RMSE: 13.3268
+2025-12-27 10:51:15,925 - INFO - Model tracked in MLflow and saved locally.

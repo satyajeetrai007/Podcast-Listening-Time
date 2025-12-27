@@ -1,0 +1,2 @@
+2025-12-27 10:50:10,111 - INFO - Encoders saved to model/encoders.pkl
+2025-12-27 10:50:21,934 - INFO - Feature engineering complete. Train shape: (750000, 21)
