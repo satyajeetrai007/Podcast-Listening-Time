@@ -18,8 +18,13 @@ stages:
       nfiles: 1
     - path: src/data_ingestion.py
       hash: md5
+<<<<<<< HEAD
       md5: e77ff8b79c05fccf211e14ac7f8dd80e
       size: 3706
+=======
+      md5: a251fe66a81fcb98f355e28613bff7f9
+      size: 2585
+>>>>>>> 5350c0a0c08040f08c4602323d3939397d612f5c
     outs:
     - path: data/preprocessed
       hash: md5
