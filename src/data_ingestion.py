@@ -5,9 +5,9 @@ import logging
 from typing import Any
 import pandas as pd
 from dotenv import load_dotenv
+load_dotenv() # this should be above import of KaggleApi **********IMP *************** , made this mistake twice
 from kaggle.api.kaggle_api_extended import KaggleApi
 
-load_dotenv()
 
 os.makedirs("logs", exist_ok=True)
 logging.basicConfig(
