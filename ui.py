@@ -29,19 +29,6 @@ def get_categories() -> Dict[str, list]:
 
 cats: Dict[str, list] = get_categories()
 
-# API Health Check
-st.sidebar.title("API Status")
-try:
-    health_check = requests.get("http://127.0.0.1:5000/health", timeout=2) # Assuming a /health endpoint exists
-    if health_check.status_code == 200:
-        st.sidebar.success("✅ API Online")
-    else:
-        st.sidebar.warning("⚠️ API Issues")
-except:
-    st.sidebar.error("❌ API Offline")
-
-st.title("🎧 Podcast Listening Time Predictor")
-
 col1, col2 = st.columns(2)
 
 with col1:
