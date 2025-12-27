@@ -1,14 +1,19 @@
-FROM python:3.11-slim
+# builder image 
 
-WORKDIR /app
-
+FROM python:3.11-slim as builder
+WORKDIR /build
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+RUN pip freeze | grep -E "flask|streamlit|pandas|scikit-learn|requests|joblib" > prod-requirements.txt
 
-EXPOSE 8501 5000
+FROM python:3.11-slim as prod
+WORKDIR /app
+COPY --from=builder /build/prod-requirements.txt .
+RUN pip install --no-cache-dir -r prod-requirements.txt
 
+COPY ui.py app.py ./
+COPY model/ model/
+
+EXPOSE 5000 8501
 CMD python app.py & streamlit run ui.py --server.port=8501 --server.address=0.0.0.0
-
-

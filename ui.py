@@ -29,6 +29,8 @@ def get_categories() -> Dict[str, list]:
 
 cats: Dict[str, list] = get_categories()
 
+st.title("🎧 Podcast Listening Time Predictor")
+
 col1, col2 = st.columns(2)
 
 with col1:
