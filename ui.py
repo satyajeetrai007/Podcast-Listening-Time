@@ -2,33 +2,63 @@ import streamlit as st
 import pandas as pd
 import requests
 import json
+import logging
+from typing import Dict, Any
+
+os.makedirs("logs", exist_ok=True)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler("logs/streamlit_app.log"),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
 
 @st.cache_data
-def get_categoriess():
-    with open("model/categories.json", "r") as f:
-        return json.load(f)
-cats = get_categoriess()
+def get_categories() -> Dict[str, list]:
+    """Loads category data for the UI selectors."""
+    try:
+        with open("model/categories.json", "r") as f:
+            return json.load(f)
+    except Exception as e:
+        logger.error(f"Error loading categories: {e}")
+        return {"podcasts": [], "titles": [], "genres": [], "days": []}
+
+cats: Dict[str, list] = get_categories()
+
+# API Health Check
+st.sidebar.title("API Status")
+try:
+    health_check = requests.get("http://127.0.0.1:5000/health", timeout=2) # Assuming a /health endpoint exists
+    if health_check.status_code == 200:
+        st.sidebar.success("✅ API Online")
+    else:
+        st.sidebar.warning("⚠️ API Issues")
+except:
+    st.sidebar.error("❌ API Offline")
 
 st.title("🎧 Podcast Listening Time Predictor")
 
 col1, col2 = st.columns(2)
 
 with col1:
-    podcast_name = st.selectbox("Podcast Name", cats['podcasts'])
-    episode_title = st.selectbox("Episode Title", cats['titles']) # Changed to selectbox
-    genre = st.selectbox("Genre", cats['genres'])
-    pub_day = st.selectbox("Publication Day", cats['days'])
+    podcast_name: str = st.selectbox("Podcast Name", cats.get('podcasts', []))
+    episode_title: str = st.selectbox("Episode Title", cats.get('titles', []))
+    genre: str = st.selectbox("Genre", cats.get('genres', []))
+    pub_day: str = st.selectbox("Publication Day", cats.get('days', []))
     pub_time = st.time_input("Publication Time")
 
 with col2:
-    ep_length = st.number_input("Episode Length (mins)", min_value=1, value=45)
-    host_pop = st.slider("Host Popularity (%)", 0, 100, 50)
-    guest_pop = st.slider("Guest Popularity (%)", 0, 100, 50)
-    num_ads = st.number_input("Number of Ads", min_value=0, value=2)
-    sentiment = st.slider("Sentiment (0=Neg, 1=Pos)", 0.0, 1.0, 0.5)
+    ep_length: int = st.number_input("Episode Length (mins)", min_value=1, value=45)
+    host_pop: int = st.slider("Host Popularity (%)", 0, 100, 50)
+    guest_pop: int = st.slider("Guest Popularity (%)", 0, 100, 50)
+    num_ads: int = st.number_input("Number of Ads", min_value=0, value=2)
+    sentiment: float = st.slider("Sentiment (0=Neg, 1=Pos)", 0.0, 1.0, 0.5)
 
 if st.button("Predict"):
-    payload = {
+    payload: Dict[str, Any] = {
         "Podcast_Name": podcast_name,
         "Episode_Title": episode_title,
         "Episode_Length_minutes": ep_length,
@@ -42,7 +72,14 @@ if st.button("Predict"):
     }
     
     try:
-        response = requests.post("http://127.0.0.1:5000/predict", json=payload)
-        st.metric("Predicted Listening Time", f"{response.json()['listening_time_minutes']} mins")
+        logger.info(f"Request for: {podcast_name}")
+        response: requests.Response = requests.post("http://127.0.0.1:5000/predict", json=payload, timeout=10)
+        response.raise_for_status()
+        
+        prediction: float = response.json().get('listening_time_minutes', 0.0)
+        st.metric("Predicted Listening Time", f"{prediction:.2f} mins")
+        logger.info("Prediction successful.")
+        
     except Exception as e:
-        st.error(f"Connection Error: {e}")
+        st.error(f"Prediction failed: {e}")
+        logger.error(f"UI prediction error: {e}")
